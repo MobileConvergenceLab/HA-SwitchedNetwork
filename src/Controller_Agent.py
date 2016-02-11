@@ -23,17 +23,19 @@ def requestLinks(id):
 	fd_popen = subprocess.Popen(cmd, stdout=subprocess.PIPE).stdout
 	data = fd_popen.read().strip()
 	fd_popen.close()
-	#print data
+	print data
+	print '\n'
 
 
 def agentSession(conn):
 	tmp = read(conn)
 	switch_role.append(tmp)
-	#print tmp
+	print tmp
 	requestLinks(tmp['ID'])
 	while 1:
 		monitoring_result.append(read(conn))
 		print monitoring_result
+		print '\n'
 
 
 def acceptConnection():
@@ -59,6 +61,7 @@ SOCK_AGENT = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 SOCK_AGENT.bind((CONTROLLER_AGENT_IP, TCP_PORT))
 SOCK_AGENT.listen(10)
 
+print '\n'
 print 'Controller Agent Ready..'
 print '\n'
 
