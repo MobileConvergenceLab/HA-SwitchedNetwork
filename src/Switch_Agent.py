@@ -2,13 +2,14 @@ import socket, os, threading, pickle
 
 
 def link_load():
-        os.system('bwm-ng -o csv -c 1 -T rate > bandwidth.log')
+	os.system('bwm-ng -o csv -c 1 -T rate > bandwidth.log')
 	f_load=open('bandwidth.log')
 	link_load=[]
 	line = f_load.readline()
 	while line:
 		link_load.append([line.split(';')[1], (line.split(';')[2], line.split(';')[3])])
 		line = f_load.readline()
+
 
 	return link_load
 
@@ -30,12 +31,14 @@ def read(_socket):
 
 print '\n...starting Switch Agent...\n'
 input_role=raw_input('switch_role: ')
+print '\n'
 
 
 switch_role={}
 switch_role['switch_role']=input_role
 switch_role['ID']='of:0000080027fd1b60'
 print switch_role
+print '\n'
 
 
 CONTROLLER_AGENT_IP = '192.168.0.50'    # The remote host
@@ -47,6 +50,7 @@ sock.connect((CONTROLLER_AGENT_IP, PORT))
 write(sock, switch_role) # Report Switch Role
 monitoring_result = link_load() #Traffic Monitoring
 print monitoring_result
+print '\n'
 write(sock, monitoring_result) #Report monitoring result
 
 while 1:
